@@ -9,46 +9,51 @@ import java.util.concurrent.locks.ReentrantLock;
 public final class SingletonQueue {
 
     /** SingletonQueue instance */
-    private static SingletonQueue SQ = init();
+    private static SingletonQueue sq = init();
 
     private final Lock LOCK;
     private final Condition NOT_EMPTY;
+    private final Condition NOT_FULL;
 
-    private Queue<Object> Q = new ConcurrentLinkedQueue<>();
+    private static final int MAX_SIZE = 128;
+
+    private static int firstOccupied = 0;
+    private static int lastFree = 0;
+    private static long[] q;
 
     private SingletonQueue() {
         LOCK = new ReentrantLock();
         NOT_EMPTY = LOCK.newCondition();
-        Q = new ConcurrentLinkedQueue<>();
+        NOT_FULL = LOCK.newCondition();
+        q = new long[MAX_SIZE];
     }
 
     private static synchronized SingletonQueue init() {
-        return SQ == null ? new SingletonQueue() : SQ;
+        return sq == null ? new SingletonQueue() : sq;
     }
 
-    public static void enqueue(Object o) {
-        SQ.LOCK.lock();
-        SQ.Q.add(o);
-        if (SQ.Q.size() == 1) {
-            SQ.NOT_EMPTY.signal();
-        }
-        SQ.LOCK.unlock();
+    public SingletonQueue getInstance() {
+        return sq;
     }
 
-    public static Object dequeue() {
-        Object o;
-        if ((o = SQ.Q.poll()) == null) {
-            SQ.LOCK.lock();
-            try {
-                SQ.NOT_EMPTY.await();
-                o = SQ.Q.poll();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } finally {
-                SQ.LOCK.unlock();
-            }
-        }
+    public void enqueue(long o) {
+        sq.LOCK.lock();
+        
+        sq.LOCK.unlock();
+    }
+
+    public long dequeue() {
+        long o = 0;
+       
         return o;
+    }
+
+    public int size() {
+        
+    }
+
+    public boolean isEmpty() {
+        return firstOccupied == lastFree;
     }
 
     @Override

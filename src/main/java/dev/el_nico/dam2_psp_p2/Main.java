@@ -10,6 +10,6 @@ public final class Main {
      * @param args The arguments of the program.
      */
     public static void main(String[] args) {
-        SingletonQueue.enqueue(new Object());
+        final ConcurrentCircularBuffer<Long> buffer = new ConcurrentCircularBuffer<>(32);
     }
 }
