@@ -27,9 +27,9 @@ public class AppTest {
     // Menos consumidores que productores. En este caso la cola tendrá contenido al finalizar la ejecución del programa.
     @Test
     public void caso3() {
-        App app = new App(10, 1000, 9, 1000, 3000);
+        App app = new App(10, 1000, 9, 1110, 3000);
         app.empezar();
 
-        assertEquals(1000, app.cola.size());
+        assertEquals(10, app.cola.size());
     }
 }

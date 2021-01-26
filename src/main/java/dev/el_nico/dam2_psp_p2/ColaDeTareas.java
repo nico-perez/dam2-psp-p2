@@ -30,4 +30,9 @@ public class ColaDeTareas {
     public int size() {
         return listaDeTareas.size();
     }
+
+    @Override
+    public String toString() {
+        return listaDeTareas.toString();
+    }
 }

@@ -272,4 +272,16 @@ public class ConcurrentCircularBuffer<T> extends AbstractQueue<T> implements Blo
             }
         }
     }
+
+    @Override
+    public String toString() {
+        StringBuilder b = new StringBuilder("[");
+        if (currentSize > 0) {
+           b.append(Q[firstOccupied]);
+        }
+        for (int i = firstOccupied + 1; i < firstOccupied + currentSize; ++i) {
+            b.append(", ").append(Q[i % MAX_SIZE]);
+        }
+        return b.append("]").toString();
+    }
 }

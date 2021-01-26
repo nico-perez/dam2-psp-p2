@@ -60,7 +60,8 @@ public final class App {
             }
         }
 
-        System.out.println("[]\nFIN");
+        System.out.println(cola);
+        System.out.println("FIN");
     }
 
     /**
